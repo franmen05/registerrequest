@@ -1,0 +1,9 @@
+package com.losrosantes.registerrequest.repository;
+
+import com.losrosantes.registerrequest.domain.Authority;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+/**
+ * Spring Data JPA repository for the {@link Authority} entity.
+ */
+public interface AuthorityRepository extends JpaRepository<Authority, String> {}
