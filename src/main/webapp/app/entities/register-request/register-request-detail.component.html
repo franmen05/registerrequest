@@ -1,0 +1,94 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="registerRequest">
+            <h2><span>Register Request</span> {{ registerRequest.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span ngbTooltip="The firstname attribute.">First Name</span></dt>
+                <dd>
+                    <span>{{ registerRequest.firstName }}</span>
+                </dd>
+                <dt><span>Last Name</span></dt>
+                <dd>
+                    <span>{{ registerRequest.lastName }}</span>
+                </dd>
+                <dt><span>Email</span></dt>
+                <dd>
+                    <span>{{ registerRequest.email }}</span>
+                </dd>
+                <dt><span>Re Enrollment</span></dt>
+                <dd>
+                    <span>{{ registerRequest.reEnrollment }}</span>
+                </dd>
+                <dt><span>Phone Number</span></dt>
+                <dd>
+                    <span>{{ registerRequest.phoneNumber }}</span>
+                </dd>
+                <dt><span>Whatsapp</span></dt>
+                <dd>
+                    <span>{{ registerRequest.whatsapp }}</span>
+                </dd>
+                <dt><span>Cell Number</span></dt>
+                <dd>
+                    <span>{{ registerRequest.cellNumber }}</span>
+                </dd>
+                <dt><span>Emergency Number</span></dt>
+                <dd>
+                    <span>{{ registerRequest.emergencyNumber }}</span>
+                </dd>
+                <dt><span>Address</span></dt>
+                <dd>
+                    <span>{{ registerRequest.address }}</span>
+                </dd>
+                <dt><span>Work Place</span></dt>
+                <dd>
+                    <span>{{ registerRequest.workPlace }}</span>
+                </dd>
+                <dt><span>Work Phone Number</span></dt>
+                <dd>
+                    <span>{{ registerRequest.workPhoneNumber }}</span>
+                </dd>
+                <dt><span>Accept Paymnet Date</span></dt>
+                <dd>
+                    <span>{{ registerRequest.acceptPaymnetDate }}</span>
+                </dd>
+                <dt><span>Attend Meetings</span></dt>
+                <dd>
+                    <span>{{ registerRequest.attendMeetings }}</span>
+                </dd>
+                <dt><span>Paid On Time</span></dt>
+                <dd>
+                    <span>{{ registerRequest.paidOnTime }}</span>
+                </dd>
+                <dt><span>Suggestion</span></dt>
+                <dd>
+                    <span>{{ registerRequest.suggestion }}</span>
+                </dd>
+                <dt><span>Create Date</span></dt>
+                <dd>
+                    <span>{{ registerRequest.createDate }}</span>
+                </dd>
+                <dt><span>Status</span></dt>
+                <dd>
+                    <span>{{ registerRequest.status }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/register-request', registerRequest.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
