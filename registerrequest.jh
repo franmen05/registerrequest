@@ -1,0 +1,51 @@
+
+/**
+ * Task entity.
+ * @author The JHipster team.
+ */
+ 
+enum ResquestStatus {
+    SUBMIT, CANCELLED, ENROLL_PROCESS, PROCESS, FINSHED
+}
+
+/**
+ * The Student entity.
+ */
+entity RegisterRequest {
+	/**
+	* The firstname attribute.
+	*/
+	firstName String required
+	lastName String  required
+	email String unique
+    reEnrollment Boolean
+	phoneNumber String
+    whatsapp String
+    cellNumber String
+    emergencyNumber String
+    address String required
+    workPlace String required
+    workPhoneNumber String required
+    acceptPaymnetDate Boolean required
+    attendMeetings Boolean required
+    paidOnTime  Boolean required
+    suggestion String
+	createDate Instant  
+    createDate Instant  required
+    status ResquestStatus required
+}
+
+// Set pagination options
+
+// paginate JobHistory, Employee with infinite-scroll
+// paginate Job with pagination
+
+// Use Data Transfert Objects (DTO)
+dto RegisterRequest with mapstruct
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
