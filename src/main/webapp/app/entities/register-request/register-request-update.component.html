@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-register-request-heading">Create or edit a Register Request</h2>
+            <h2 id="jhi-register-request-heading">Formulario de Inscripción</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_firstName" ngbTooltip="The firstname attribute.">First Name</label>
+                    <label class="form-control-label" for="field_firstName" ngbTooltip="The firstname attribute.">Nombres</label>
                     <input type="text" class="form-control" name="firstName" id="field_firstName"
                            formControlName="firstName"/>
                     <div *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_lastName">Last Name</label>
+                    <label class="form-control-label" for="field_lastName">Apellidos</label>
                     <input type="text" class="form-control" name="lastName" id="field_lastName"
                            formControlName="lastName"/>
                     <div *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
@@ -44,13 +44,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_reEnrollment">Re Enrollment</label>
+                    <label class="form-control-label" for="field_reEnrollment">Re-Inscripción</label>
                     <input type="checkbox" class="form-control" name="reEnrollment" id="field_reEnrollment"
                            formControlName="reEnrollment"/>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_phoneNumber">Phone Number</label>
+                    <label class="form-control-label" for="field_phoneNumber">Numero de  Telefono</label>
                     <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber"
                            formControlName="phoneNumber"/>
                 </div>
@@ -62,19 +62,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_cellNumber">Cell Number</label>
+                    <label class="form-control-label" for="field_cellNumber">Celular</label>
                     <input type="text" class="form-control" name="cellNumber" id="field_cellNumber"
                            formControlName="cellNumber"/>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_emergencyNumber">Emergency Number</label>
+                    <label class="form-control-label" for="field_emergencyNumber">Numero de emergencia</label>
                     <input type="text" class="form-control" name="emergencyNumber" id="field_emergencyNumber"
                            formControlName="emergencyNumber"/>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_address">Address</label>
+                    <label class="form-control-label" for="field_address">Dirreccion</label>
                     <input type="text" class="form-control" name="address" id="field_address"
                            formControlName="address"/>
                     <div *ngIf="editForm.get('address')!.invalid && (editForm.get('address')!.dirty || editForm.get('address')!.touched)">
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_workPlace">Work Place</label>
+                    <label class="form-control-label" for="field_workPlace">Lugar de Trabajo</label>
                     <input type="text" class="form-control" name="workPlace" id="field_workPlace"
                            formControlName="workPlace"/>
                     <div *ngIf="editForm.get('workPlace')!.invalid && (editForm.get('workPlace')!.dirty || editForm.get('workPlace')!.touched)">
@@ -98,7 +98,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_workPhoneNumber">Work Phone Number</label>
+                    <label class="form-control-label" for="field_workPhoneNumber">Numero del Trabajo</label>
                     <input type="text" class="form-control" name="workPhoneNumber" id="field_workPhoneNumber"
                            formControlName="workPhoneNumber"/>
                     <div *ngIf="editForm.get('workPhoneNumber')!.invalid && (editForm.get('workPhoneNumber')!.dirty || editForm.get('workPhoneNumber')!.touched)">
@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_acceptPaymnetDate">Accept Paymnet Date</label>
+                    <label class="form-control-label" for="field_acceptPaymnetDate">Acepta  Dia de pago</label>
                     <input type="checkbox" class="form-control" name="acceptPaymnetDate" id="field_acceptPaymnetDate"
                            formControlName="acceptPaymnetDate"/>
                     <div *ngIf="editForm.get('acceptPaymnetDate')!.invalid && (editForm.get('acceptPaymnetDate')!.dirty || editForm.get('acceptPaymnetDate')!.touched)">
@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_attendMeetings">Attend Meetings</label>
+                    <label class="form-control-label" for="field_attendMeetings">Asistió a  Reuniones</label>
                     <input type="checkbox" class="form-control" name="attendMeetings" id="field_attendMeetings"
                            formControlName="attendMeetings"/>
                     <div *ngIf="editForm.get('attendMeetings')!.invalid && (editForm.get('attendMeetings')!.dirty || editForm.get('attendMeetings')!.touched)">
@@ -134,7 +134,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_paidOnTime">Paid On Time</label>
+                    <label class="form-control-label" for="field_paidOnTime">Pago a Tiempo</label>
                     <input type="checkbox" class="form-control" name="paidOnTime" id="field_paidOnTime"
                            formControlName="paidOnTime"/>
                     <div *ngIf="editForm.get('paidOnTime')!.invalid && (editForm.get('paidOnTime')!.dirty || editForm.get('paidOnTime')!.touched)">
@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_suggestion">Suggestion</label>
+                    <label class="form-control-label" for="field_suggestion">Sugerencia</label>
                     <input type="text" class="form-control" name="suggestion" id="field_suggestion"
                            formControlName="suggestion"/>
                 </div>
@@ -192,7 +192,7 @@
                 </button>
 
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
                 </button>
             </div>
         </form>
