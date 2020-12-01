@@ -1,31 +1,32 @@
 package com.losrosantes.registerrequest.web.rest;
 
+import com.losrosantes.registerrequest.domain.User;
+import com.losrosantes.registerrequest.service.MailService;
 import com.losrosantes.registerrequest.service.RegisterRequestService;
-import com.losrosantes.registerrequest.web.rest.errors.BadRequestAlertException;
+import com.losrosantes.registerrequest.service.UserService;
 import com.losrosantes.registerrequest.service.dto.RegisterRequestDTO;
-
+import com.losrosantes.registerrequest.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import javax.validation.Valid;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-
 /**
  * REST controller for managing {@link com.losrosantes.registerrequest.domain.RegisterRequest}.
  */
 @RestController
 @RequestMapping("/api")
-public class RegisterRequestResource {
-
-    private final Logger log = LoggerFactory.getLogger(RegisterRequestResource.class);
+public class RegisterRequestController {
+    private final Logger log = LoggerFactory.getLogger(RegisterRequestController.class);
 
     private static final String ENTITY_NAME = "registerRequest";
 
@@ -34,8 +35,14 @@ public class RegisterRequestResource {
 
     private final RegisterRequestService registerRequestService;
 
-    public RegisterRequestResource(RegisterRequestService registerRequestService) {
+    private final MailService mailService;
+
+    private final UserService user;
+
+    public RegisterRequestController(RegisterRequestService registerRequestService, MailService mailService, UserService userService) {
         this.registerRequestService = registerRequestService;
+        this.mailService = mailService;
+        this.user = userService;
     }
 
     /**
@@ -46,15 +53,27 @@ public class RegisterRequestResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/register-requests")
-    public ResponseEntity<RegisterRequestDTO> createRegisterRequest(@Valid @RequestBody RegisterRequestDTO registerRequestDTO) throws URISyntaxException {
+    public ResponseEntity<RegisterRequestDTO> createRegisterRequest(@Valid @RequestBody RegisterRequestDTO registerRequestDTO)
+        throws URISyntaxException {
         log.debug("REST request to save RegisterRequest : {}", registerRequestDTO);
         if (registerRequestDTO.getId() != null) {
             throw new BadRequestAlertException("A new registerRequest cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RegisterRequestDTO result = registerRequestService.save(registerRequestDTO);
-        return ResponseEntity.created(new URI("/api/register-requests/" + result.getId()))
+        val result = registerRequestService.save(registerRequestDTO);
+        //        val user = new User();
+        //        user.setFirstName("s");
+        //        user.setLangKey("US");
+        //        user.setLastName("e");
+        //        user.setEmail("franmen05@gmail.com");
+        //        mailService.sendCreationEmail(user);
+
+        return ResponseEntity
+            .created(new URI("/api/register-requests/success" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
+        //        return ResponseEntity.created(new URI("/api/register-requests/" + result.getId()))
+        //            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+        //            .body(result);
     }
 
     /**
@@ -67,13 +86,15 @@ public class RegisterRequestResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/register-requests")
-    public ResponseEntity<RegisterRequestDTO> updateRegisterRequest(@Valid @RequestBody RegisterRequestDTO registerRequestDTO) throws URISyntaxException {
+    public ResponseEntity<RegisterRequestDTO> updateRegisterRequest(@Valid @RequestBody RegisterRequestDTO registerRequestDTO)
+        throws URISyntaxException {
         log.debug("REST request to update RegisterRequest : {}", registerRequestDTO);
         if (registerRequestDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         RegisterRequestDTO result = registerRequestService.save(registerRequestDTO);
-        return ResponseEntity.ok()
+        return ResponseEntity
+            .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, registerRequestDTO.getId().toString()))
             .body(result);
     }
@@ -85,6 +106,12 @@ public class RegisterRequestResource {
      */
     @GetMapping("/register-requests")
     public List<RegisterRequestDTO> getAllRegisterRequests() {
+        log.debug("REST request to get all RegisterRequests");
+        return registerRequestService.findAll();
+    }
+
+    @GetMapping("/register-requests/success")
+    public List<RegisterRequestDTO> registerSuccess() {
         log.debug("REST request to get all RegisterRequests");
         return registerRequestService.findAll();
     }
@@ -112,6 +139,9 @@ public class RegisterRequestResource {
     public ResponseEntity<Void> deleteRegisterRequest(@PathVariable Long id) {
         log.debug("REST request to delete RegisterRequest : {}", id);
         registerRequestService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .build();
     }
 }

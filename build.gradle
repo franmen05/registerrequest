@@ -29,7 +29,7 @@ plugins {
 }
 
 group = "com.losrosantes.registerrequest"
-version = "0.0.1-SNAPSHOT"
+version = ""
 
 description = ""
 
@@ -143,7 +143,7 @@ liquibase {
             driver "com.mysql.cj.jdbc.Driver"
             url "jdbc:mysql://localhost:3306/RegisterRequest"
             username "root"
-            password ""
+            password "secret"
             changeLogFile "src/main/resources/config/liquibase/master.xml"
             defaultSchemaName "RegisterRequest"
             logLevel "debug"
@@ -153,7 +153,7 @@ liquibase {
             driver "com.mysql.cj.jdbc.Driver"
             url "jdbc:mysql://localhost:3306/RegisterRequest"
             username "root"
-            password ""
+            password "secret"
             changeLogFile project.ext.diffChangelogFile
             referenceUrl "hibernate:spring:com.losrosantes.registerrequest.domain?dialect=org.hibernate.dialect.MySQL8Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
             defaultSchemaName "RegisterRequest"
@@ -272,6 +272,15 @@ dependencies {
     testRuntimeOnly "com.tngtech.archunit:archunit-junit5-engine:${archunit_junit5_version}"
     testImplementation "com.h2database:h2"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+
+
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    compile 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
 }
 
 if (project.hasProperty("gae")) {

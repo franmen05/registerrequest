@@ -1,11 +1,13 @@
 package com.losrosantes.registerrequest.service;
 
 import com.losrosantes.registerrequest.domain.User;
+import com.losrosantes.registerrequest.service.dto.RegisterRequestDTO;
 import io.github.jhipster.config.JHipsterProperties;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -65,7 +67,12 @@ public class MailService {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
+            val toArr = to.split(";");
+            //            if(toArr.length>0)
+            //                message.setTo(toArr);
+            //            else
             message.setTo(to);
+
             message.setFrom(jHipsterProperties.getMail().getFrom());
             message.setSubject(subject);
             message.setText(content, isHtml);
@@ -89,6 +96,23 @@ public class MailService {
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
+    }
+
+    @Async
+    public void sendEmailNewRegisterRequest(RegisterRequestDTO user) {
+        if (user.getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", user.getFirstName());
+            return;
+        }
+        //        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(Locale.US);
+        context.setVariable("request", user);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("mail/newRegisterRequest", context);
+        String subject = messageSource.getMessage("email.register.title", null, Locale.US);
+        //        String to = messageSource.getMessage("email.register.to", null, Locale.US);
+        String to = "franmen05@gmail.com";
+        sendEmail(to, subject, content, false, true);
     }
 
     @Async

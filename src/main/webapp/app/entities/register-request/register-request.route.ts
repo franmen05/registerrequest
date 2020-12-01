@@ -39,7 +39,7 @@ export const registerRequestRoute: Routes = [
     path: '',
     component: RegisterRequestComponent,
     data: {
-      authorities: [Authority.USER],
+      // authorities: [Authority.USER],
       pageTitle: 'RegisterRequests',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const registerRequestRoute: Routes = [
       registerRequest: RegisterRequestResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      // authorities: [Authority.USER],
       pageTitle: 'RegisterRequests',
     },
     canActivate: [UserRouteAccessService],

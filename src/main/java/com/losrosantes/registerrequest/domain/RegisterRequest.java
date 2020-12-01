@@ -1,13 +1,10 @@
 package com.losrosantes.registerrequest.domain;
 
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import com.losrosantes.registerrequest.domain.enumeration.ResquestStatus;
 import java.io.Serializable;
 import java.time.Instant;
-
-import com.losrosantes.registerrequest.domain.enumeration.ResquestStatus;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 /**
  * The Student entity.
@@ -15,7 +12,6 @@ import com.losrosantes.registerrequest.domain.enumeration.ResquestStatus;
 @Entity
 @Table(name = "register_request")
 public class RegisterRequest implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -25,46 +21,54 @@ public class RegisterRequest implements Serializable {
     /**
      * The firstname attribute.
      */
-    @NotNull
+    @NotEmpty(message = "Nombre no puede estar vacio")
+    @NotNull(message = "Apellido no puede estar null")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @NotNull
+    @NotEmpty(message = "Apellido no puede estar vacio")
+    @NotNull(message = "Apellido no puede estar null")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    
+    @NotEmpty(message = "Email no puede estar vacio")
+    @Email(message = "No es un email valido")
     @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "re_enrollment")
+    @Column(name = "re_enrollment", columnDefinition = "boolean default true")
     private Boolean reEnrollment;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @NotNull(message = "WhatsApp no puede estar vacio")
     @Column(name = "whatsapp")
     private String whatsapp;
 
+    @NotEmpty(message = "Celular no puede estar vacio")
+    @NotNull(message = "Celular no puede estar null")
     @Column(name = "cell_number")
     private String cellNumber;
 
     @Column(name = "emergency_number")
     private String emergencyNumber;
 
-    @NotNull
+    @NotEmpty(message = "Direccion no puede estar vacio")
+    @NotNull(message = "Direccion no puede estar null")
     @Column(name = "address", nullable = false)
     private String address;
 
-    @NotNull
+    @NotEmpty(message = "Lugar de trabajo no puede estar vacio")
+    @NotNull(message = "Lugar de trabajo no puede estar null")
     @Column(name = "work_place", nullable = false)
     private String workPlace;
 
-    @NotNull
+    @NotEmpty(message = "Telefono de trabajo no puede estar vacio")
     @Column(name = "work_phone_number", nullable = false)
     private String workPhoneNumber;
 
-    @NotNull
+    @NotNull(message = "Fecha de Pago no puede estar vacio")
     @Column(name = "accept_paymnet_date", nullable = false)
     private Boolean acceptPaymnetDate;
 
@@ -79,11 +83,11 @@ public class RegisterRequest implements Serializable {
     @Column(name = "suggestion")
     private String suggestion;
 
-    @NotNull
+    //    @NotNull
     @Column(name = "create_date", nullable = false)
     private Instant createDate;
 
-    @NotNull
+    //    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ResquestStatus status;
@@ -317,6 +321,7 @@ public class RegisterRequest implements Serializable {
     public void setStatus(ResquestStatus status) {
         this.status = status;
     }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

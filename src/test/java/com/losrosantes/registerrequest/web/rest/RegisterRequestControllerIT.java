@@ -1,12 +1,21 @@
 package com.losrosantes.registerrequest.web.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.losrosantes.registerrequest.RegisterRequestApp;
 import com.losrosantes.registerrequest.domain.RegisterRequest;
+import com.losrosantes.registerrequest.domain.enumeration.ResquestStatus;
 import com.losrosantes.registerrequest.repository.RegisterRequestRepository;
 import com.losrosantes.registerrequest.service.RegisterRequestService;
 import com.losrosantes.registerrequest.service.dto.RegisterRequestDTO;
 import com.losrosantes.registerrequest.service.mapper.RegisterRequestMapper;
-
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +25,14 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.losrosantes.registerrequest.domain.enumeration.ResquestStatus;
 /**
- * Integration tests for the {@link RegisterRequestResource} REST controller.
+ * Integration tests for the {@link RegisterRequestController} REST controller.
  */
 @SpringBootTest(classes = RegisterRequestApp.class)
 @AutoConfigureMockMvc
 @WithMockUser
-public class RegisterRequestResourceIT {
-
+public class RegisterRequestControllerIT {
     private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
 
@@ -130,6 +128,7 @@ public class RegisterRequestResourceIT {
             .status(DEFAULT_STATUS);
         return registerRequest;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -169,9 +168,12 @@ public class RegisterRequestResourceIT {
         int databaseSizeBeforeCreate = registerRequestRepository.findAll().size();
         // Create the RegisterRequest
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isCreated());
 
         // Validate the RegisterRequest in the database
@@ -207,16 +209,18 @@ public class RegisterRequestResourceIT {
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the RegisterRequest in the database
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
         assertThat(registerRequestList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -228,10 +232,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -248,10 +254,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -268,10 +276,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -288,10 +298,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -308,10 +320,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -328,10 +342,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -348,10 +364,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -368,10 +386,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -388,10 +408,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -408,10 +430,12 @@ public class RegisterRequestResourceIT {
         // Create the RegisterRequest, which fails.
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
-
-        restRegisterRequestMockMvc.perform(post("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                post("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         List<RegisterRequest> registerRequestList = registerRequestRepository.findAll();
@@ -425,7 +449,8 @@ public class RegisterRequestResourceIT {
         registerRequestRepository.saveAndFlush(registerRequest);
 
         // Get all the registerRequestList
-        restRegisterRequestMockMvc.perform(get("/api/register-requests?sort=id,desc"))
+        restRegisterRequestMockMvc
+            .perform(get("/api/register-requests?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(registerRequest.getId().intValue())))
@@ -447,7 +472,7 @@ public class RegisterRequestResourceIT {
             .andExpect(jsonPath("$.[*].createDate").value(hasItem(DEFAULT_CREATE_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getRegisterRequest() throws Exception {
@@ -455,7 +480,8 @@ public class RegisterRequestResourceIT {
         registerRequestRepository.saveAndFlush(registerRequest);
 
         // Get the registerRequest
-        restRegisterRequestMockMvc.perform(get("/api/register-requests/{id}", registerRequest.getId()))
+        restRegisterRequestMockMvc
+            .perform(get("/api/register-requests/{id}", registerRequest.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(registerRequest.getId().intValue()))
@@ -477,12 +503,12 @@ public class RegisterRequestResourceIT {
             .andExpect(jsonPath("$.createDate").value(DEFAULT_CREATE_DATE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingRegisterRequest() throws Exception {
         // Get the registerRequest
-        restRegisterRequestMockMvc.perform(get("/api/register-requests/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
+        restRegisterRequestMockMvc.perform(get("/api/register-requests/{id}", Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -517,9 +543,12 @@ public class RegisterRequestResourceIT {
             .status(UPDATED_STATUS);
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(updatedRegisterRequest);
 
-        restRegisterRequestMockMvc.perform(put("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                put("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isOk());
 
         // Validate the RegisterRequest in the database
@@ -554,9 +583,12 @@ public class RegisterRequestResourceIT {
         RegisterRequestDTO registerRequestDTO = registerRequestMapper.toDto(registerRequest);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restRegisterRequestMockMvc.perform(put("/api/register-requests")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO)))
+        restRegisterRequestMockMvc
+            .perform(
+                put("/api/register-requests")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(registerRequestDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the RegisterRequest in the database
@@ -573,8 +605,8 @@ public class RegisterRequestResourceIT {
         int databaseSizeBeforeDelete = registerRequestRepository.findAll().size();
 
         // Delete the registerRequest
-        restRegisterRequestMockMvc.perform(delete("/api/register-requests/{id}", registerRequest.getId())
-            .accept(MediaType.APPLICATION_JSON))
+        restRegisterRequestMockMvc
+            .perform(delete("/api/register-requests/{id}", registerRequest.getId()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item

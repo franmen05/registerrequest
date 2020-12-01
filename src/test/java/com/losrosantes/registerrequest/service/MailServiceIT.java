@@ -136,7 +136,7 @@ public class MailServiceIT {
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         user.setLangKey("en");
-        mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
+        mailService.sendEmailNewRegisterRequest(user, "mail/testEmail", "email.test.title");
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getSubject()).isEqualTo("test title");
@@ -208,7 +208,7 @@ public class MailServiceIT {
         user.setEmail("john.doe@example.com");
         for (String langKey : languages) {
             user.setLangKey(langKey);
-            mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
+            mailService.sendEmailNewRegisterRequest(user, "mail/testEmail", "email.test.title");
             verify(javaMailSender, atLeastOnce()).send(messageCaptor.capture());
             MimeMessage message = messageCaptor.getValue();
 

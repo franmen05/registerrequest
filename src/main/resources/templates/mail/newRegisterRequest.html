@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
+    <head>
+        <title th:text="#{email.activation.title}">JHipster activation</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    </head>
+    <body>
+        <p >
+            Hay una nueva solicitud de Inscripcion
+        </p>
+        <p>
+            <a th:href="${baseUrl}" >Ir al Sistema de Registro Los Rosantes</a>
+        </p>
+        <p>
+            <span> Regards, </span>
+            <br/>
+            <em th:text="#{email.register.signature}">JHipster.</em>
+        </p>
+    </body>
+</html>

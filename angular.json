@@ -31,6 +31,7 @@
   },
   "defaultProject": "register-request",
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "9b77e8ff-0f6c-4690-802a-b9288e4aaacd"
   }
 }
